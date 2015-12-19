@@ -5,10 +5,13 @@ import Data.Hash.MD5
 
 main :: IO ()
 main = do
-	let list = takeWhile (\x -> not . checkZeroes $ (input ++ x)) [show a | a <- [0..]]
-	putStrLn . show $ ((read (last list) :: Int) + 1)
+	let partOne = takeWhile (\x -> not $ checkZeroes 5 (input ++ x)) [show a | a <- [0..]]
+	putStrLn . show $ ((read (last partOne) :: Int) + 1)
+
+	let partTwo = takeWhile (\x -> not $ checkZeroes 6 (input ++ x)) [show a | a <- [0..]]
+	putStrLn . show $ ((read (last partTwo) :: Int) + 1)
 	where
 		input = "ckczppom"
 
-checkZeroes :: String -> Bool
-checkZeroes a = (take 5 . md5s . Str $ a) == "00000"
+checkZeroes :: Int -> String -> Bool
+checkZeroes x a = (take x . md5s . Str $ a) == replicate x '0'
